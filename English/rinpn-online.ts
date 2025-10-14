@@ -15,10 +15,15 @@ import Exevalator, {ExevalatorFunctionInterface, ExevalatorError} from "./exeval
  * It loads and execute "rinpn-online-bundled.js" generated above.
  */
 
+// The version of RINPn Online
+const RINPN_ONLINE_VERSION: string = "0.0.0";
 
 // --------------------------------------------------------------------------------
 // DOM Elements of UI
 // --------------------------------------------------------------------------------
+
+// Version Label
+const versionLabel: HTMLSpanElement = document.getElementById("version-label")! as HTMLSpanElement;
 
 // I/O Fields
 const inputField: HTMLInputElement = document.getElementById("input-field")! as HTMLInputElement;
@@ -77,6 +82,11 @@ const spaceButton: HTMLButtonElement = document.getElementById("space-button")! 
 // --------------------------------------------------------------------------------
 // Important Processes
 // --------------------------------------------------------------------------------
+
+// The onload event
+window.onload = (): void => {
+    versionLabel.innerHTML = RINPN_ONLINE_VERSION;
+}
 
 // The function calculates the currently input expression, 
 // and display the result on the output field
