@@ -1,8 +1,39 @@
 # RINPn Online
 
-<hr />
+( &raquo; [Japanese](./README_JAPANESE.md) )
+
 
 Simplified version of [RINPn](https://github.com/RINEARN/rinpn) which runs on web browsers.
+
+
+## How to Use
+
+Open the following HTML file by your web browser (by double-clicking):
+
+    English/index.html
+
+Then the calculator will be displayed on the web browser's screen.
+
+## How to Build
+
+This app is an open source software. You can get the source code and build it as follows:
+
+    # Download the source code
+    git clone https://github.com/RINEARN/rinpn-online.git
+
+    # Go to the app directory
+    cd ./rinpn-online/English
+
+    # Setup environment
+    npm init   # Only when "package.json" is not initialized yet
+    npm install --save-dev typescript
+    npm install --save-dev @types/node 
+    npm install --save-dev esbuild
+
+    # Build
+    npx esbuild rinpn-online.ts --bundle --outfile=rinpn-online-bundled.js
+
+When all the building steps complete successfully, single JavaScript file "rinpn-online-bundled.js" is generated. The file will be loaded from index.html.
 
 
 ## License
