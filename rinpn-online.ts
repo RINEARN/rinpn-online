@@ -105,6 +105,8 @@ function calculate() {
     exevalator.connectFunction("exp", new ExpFunction());
     exevalator.connectFunction("ln", new LnFunction());
     exevalator.connectFunction("log10", new Log10Function());
+    exevalator.connectFunction("sum", new SumFunction());
+    exevalator.connectFunction("mean", new MeanFunction());
 
     // Compute the value of the inputted expression,
     // and display the result on the result to the output field
@@ -455,5 +457,44 @@ class Log10Function implements ExevalatorFunctionInterface {
     }
 }
 
+class SumFunction implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length === 0) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: more than 1)");
+        }
+        return StatisticsCalculator.sum(args);
+    }
+}
+
+class MeanFunction implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length === 0) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: more than 1)");
+        }
+        return StatisticsCalculator.mean(args);
+    }
+}
+
+class StatisticsCalculator {
+
+    // Calculate the summation value of the args.
+    public static sum(args: number[]): number {
+        const argCount = args.length;
+        var sumValue: number = 0;
+        for (var iarg: number = 0; iarg<argCount; iarg++) {
+            const arg: number = args[iarg];
+            sumValue += arg;
+        }
+        return sumValue;
+    }
+
+    // Calculate the summation value of the args.
+    public static mean(args: number[]): number {
+        const argCount = args.length;
+        const sumValue: number = StatisticsCalculator.sum(args);
+        const meanValue = sumValue / argCount;
+        return meanValue;
+    }
+}
 
 
