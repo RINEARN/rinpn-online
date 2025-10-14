@@ -111,6 +111,12 @@ function calculate() {
     exevalator.connectFunction("mean", new MeanFunction());
     exevalator.connectFunction("sdn", new SdnFunction());
     exevalator.connectFunction("sdn1", new Sdn1Function());
+    exevalator.connectFunction("rad", new RadFunction());
+    exevalator.connectFunction("deg", new DegFunction());
+
+    // Declare variable: PI
+    exevalator.declareVariable("PI");
+    exevalator.writeVariable("PI", Math.PI);
 
     // Compute the value of the inputted expression,
     // and display the result on the result to the output field
@@ -512,6 +518,28 @@ class MeanFunction implements ExevalatorFunctionInterface {
             throw new ExevalatorError("Unexpected number of arguments. (expected: more than 1)");
         }
         return StatisticsCalculator.mean(args);
+    }
+}
+
+class RadFunction implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length === 0) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: 1)");
+        }
+        const degValue: number = args[0];
+        const radValue: number = Math.PI * degValue / 180.0;
+        return radValue;
+    }
+}
+
+class DegFunction implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length === 0) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: 1)");
+        }
+        const radValue: number = args[0];
+        const degValue: number = 180.0 * radValue / Math.PI;
+        return degValue;
     }
 }
 
