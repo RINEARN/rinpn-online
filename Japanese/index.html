@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>RINPn オンライン版</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<style>
+		@media (min-width: 0px) {
+			body { background-color: #afddff; display: flex; flex-direction: column; }
+		}
+		@media (min-width: 340px) {
+			body { height: 40vh; background-color: #afddff; display: flex; flex-direction: column; }
+		}
+		@media (min-width: 400px) {
+			body { height: 50vh; background-color: #afddff; display: flex; flex-direction: column; }
+		}
+		@media (min-width: 600px) {
+			body { height: 90vh; background-color: #afddff; display: flex; flex-direction: column; }
+		}
+
+		table { width: 100%; height: 100%; }
+		tbody { width: 100%; height: 100%; }
+		tr { width: 100%; height: 100%; }
+		td { text-align: center; margin: 0px; padding: 0px;}
+		button { width: 100%; height: 100%; font-size: 135%; margin: 0px; padding: 0px; }
+	</style>
+</head>
+
+<body>
+
+
+
+<!-- INPUT/OUTPUT Panel -->
+<div style="padding: 0px 5px 10px 5px;">
+
+	<label for="input-field" style="font-size: 80%; font-weight: bold; color: #555555;">INPUT</label>
+	<br />
+	<input type="text", id="input-field" value="" style="box-sizing: border-box; width:100%; background-color: #777777; color: #aaffaa; font-size: 114%; margin-bottom: 3px;">
+	<br />
+	<label for="output-field" style="font-size: 80%; font-weight: bold; color: #555555;">OUTPUT</label>
+	<br />
+	<input type="text", id="output-field" value="" style="box-sizing: border-box; width:100%; background-color: #777777; color: #aaffaa; font-size: 114%; margin-bottom: 3px;">
+
+</div>
+
+
+<!-- Key Panel -->
+<div style="padding: 0px 5px 0px 3px; width: 100%; height: 100%; flex-grow: 1;">
+<div style="width: 100%; height: 100%; display: flex;">
+		
+		<!-- Function Panel -->
+		<div style="padding: 0px 1px 0px 0px; height: 100%; flex-grow: 7;">
+			<table>
+				<tbody>
+					<tr style="height: 12.5%;">
+						<td><button id="sin-button" style="font-size: 80%;">sin</button><td/>
+						<td><button id="cos-button" style="font-size: 80%;">cos</button><td/>
+						<td><button id="tan-button" style="font-size: 80%;">tan</button><td/>
+					</tr>
+					<tr style="height: 12.5%;">
+						<td><button id="asin-button" style="font-size: 80%;">asin</button><td/>
+						<td><button id="acos-button" style="font-size: 80%;">acos</button><td/>
+						<td><button id="atan-button" style="font-size: 80%;">atan</button><td/>
+					</tr>
+					<tr style="height: 12.5%;">
+						<td><button id="abs-button" style="font-size: 80%;">abs</button><td/>
+						<td><button id="sqrt-button" style="font-size: 80%;">sqrt</button><td/>
+						<td><button id="pow-button" style="font-size: 80%;">pow</button><td/>
+					</tr>
+					<tr style="height: 12.5%;">
+						<td><button id="exp-button" style="font-size: 80%;">exp</button><td/>
+						<td><button id="ln-button" style="font-size: 80%;">ln</button><td/>
+						<td><button id="log10-button" style="font-size: 80%;">log10</button><td/>
+					</tr>
+					<tr style="height: 12.5%;">
+						<td><button id="sum-button" style="font-size: 80%;">sum</button><td/>
+						<td><button id="van-button" style="font-size: 80%;">van</button><td/>
+						<td><button id="van1-button" style="font-size: 80%;">van1</button><td/>
+					</tr>
+					<tr style="height: 12.5%;">
+						<td><button id="mean-button" style="font-size: 80%;">mean</button><td/>
+						<td><button id="sdn-button" style="font-size: 80%;">sdn</button><td/>
+						<td><button id="sdn1-button" style="font-size: 80%;">sdn1</button><td/>
+					</tr>
+					<tr style="height: 12.5%;">
+						<td><button id="rad-button" style="font-size: 80%;">rad</button><td/>
+						<td><button id="deg-button" style="font-size: 80%;">deg</button><td/>
+						<td><button id="pi-button" style="font-size: 80%;">PI</button><td/>
+					</tr>
+					<tr style="height: 12.5%;">
+						<td><button id="open-paren-button" style="font-size: 80%;">(</button><td/>
+						<td><button id="close-paren-button" style="font-size: 80%;">)</button><td/>
+						<td><button id="space-button" style="font-size: 80%;">_</button><td/>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<!-- Number Panel -->
+		<div style="padding: 0px 2px 0px 2px; height: 100%; flex-grow: 12;">
+			<table>
+				<tbody>
+					<tr style="height: 25%;">
+						<td><button id="num7-button">7</button><td/>
+						<td><button id="num8-button">8</button><td/>
+						<td><button id="num9-button">9</button><td/>
+						<td><button id="div-button">/</button><td/>
+					</tr>
+					<tr style="height: 25%;">
+						<td><button id="num4-button">4</button><td/>
+						<td><button id="num5-button">5</button><td/>
+						<td><button id="num6-button">6</button><td/>
+						<td><button id="mul-button">*</button><td/>
+					</tr>
+					<tr style="height: 25%;">
+						<td><button id="num1-button">1</button><td/>
+						<td><button id="num2-button">2</button><td/>
+						<td><button id="num3-button">3</button><td/>
+						<td><button id="sub-button">-</button><td/>
+					</tr>
+					<tr style="height: 25%;">
+						<td><button id="num0-button">0</button><td/>
+						<td><button id="dot-button">.</button><td/>
+						<td><button id="comma-button">,</button><td/>
+						<td><button id="add-button">+</button><td/>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<!-- Command Panel -->
+		<div style="padding: 0px 5px 0px 1px; height: 100%; flex-grow: 3;">
+			<table>
+				<tbody>
+					<tr style="height: 33%;">
+						<td><button id="calculation-button" style="color: #0000ff;">=</button><td/>
+					</tr>
+					<tr style="height: 33%;">
+						<td><button id="clear-button" style="color: #ff0000;">C</button><td/>
+					</tr>
+					<tr style="height: 33%;">
+						<td><button id="back-space-button" style="color: #000000;">BS</button><td/>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+</div>
+</div>
+
+<!-- Info Panel -->
+<div style="width: 100%; display: flex; margin-top: 5px;">
+	<div style="flex-grow: 5; text-align: left; margin-left: 5px; font-size: small;">
+		|
+		RINPn Online Ver.<span id="version-label"> --- (set by window.onload in the script)</span>
+		|
+		<a href="https://www.rinearn.com/en-us/rinpn/">Website</a>
+		|
+		<a href="https://github.com/RINEARN/rinpn-online">Source Code</a>
+		|
+	</div>
+	<div style="flex-grow: 1;">
+		&nbsp;&nbsp;&nbsp;&nbsp;
+	</div>
+	<div style="flex-grow: 1; text-align: right; margin-right: 5px; font-size: small;">
+		Powered by <a href="https://www.rinearn.com/">RINEARN</a>
+	</div>
+</div>
+
+<!-- Load the core script code -->
+<script src="rinpn-online-bundled.js"></script>
+
+
+</body>
+</html>
