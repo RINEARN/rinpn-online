@@ -102,6 +102,9 @@ function calculate() {
     exevalator.connectFunction("abs", new AbsFunction());
     exevalator.connectFunction("sqrt", new SqrtFunction());
     exevalator.connectFunction("pow", new PowFunction());
+    exevalator.connectFunction("exp", new ExpFunction());
+    exevalator.connectFunction("ln", new LnFunction());
+    exevalator.connectFunction("log10", new Log10Function());
 
     // Compute the value of the inputted expression,
     // and display the result on the result to the output field
@@ -424,5 +427,33 @@ class PowFunction implements ExevalatorFunctionInterface {
         return Math.pow(args[0], args[1]);
     }
 }
+
+class ExpFunction implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length != 1) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: 1)");
+        }
+        return Math.exp(args[0]);
+    }
+}
+
+class LnFunction implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length != 1) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: 1)");
+        }
+        return Math.log(args[0]);
+    }
+}
+
+class Log10Function implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length != 1) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: 1)");
+        }
+        return Math.log10(args[0]);
+    }
+}
+
 
 
