@@ -598,8 +598,8 @@ class StatisticsCalculator {
     // Calculate the summation value of the args
     public static sum(args: number[]): number {
         const argCount = args.length;
-        var sumValue: number = 0.0;
-        for (var iarg: number = 0; iarg<argCount; iarg++) {
+        let sumValue: number = 0.0;
+        for (let iarg: number = 0; iarg<argCount; iarg++) {
             const arg: number = args[iarg];
             sumValue += arg;
         }
@@ -618,9 +618,9 @@ class StatisticsCalculator {
     public static van(args: number[]): number {
         const argCount = args.length;
         const meanValue: number = StatisticsCalculator.mean(args);
-        var sumSquareDiffValue = 0.0;
+        let sumSquareDiffValue = 0.0;
 
-        for (var iarg: number = 0; iarg<argCount; iarg++) {
+        for (let iarg: number = 0; iarg<argCount; iarg++) {
             const arg: number = args[iarg];
             const squareDiffValue = (arg - meanValue) * (arg - meanValue);
             sumSquareDiffValue += squareDiffValue;
@@ -634,9 +634,9 @@ class StatisticsCalculator {
     public static van1(args: number[]): number {
         const argCount = args.length;
         const meanValue: number = StatisticsCalculator.mean(args);
-        var sumSquareDiffValue = 0.0;
+        let sumSquareDiffValue = 0.0;
 
-        for (var iarg: number = 0; iarg<argCount; iarg++) {
+        for (let iarg: number = 0; iarg<argCount; iarg++) {
             const arg: number = args[iarg];
             const squareDiffValue = (arg - meanValue) * (arg - meanValue);
             sumSquareDiffValue += squareDiffValue;
