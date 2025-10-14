@@ -47,80 +47,6 @@ const divButton: HTMLButtonElement = document.getElementById("div-button")! as H
 const dotButton: HTMLButtonElement = document.getElementById("dot-button")! as HTMLButtonElement;
 const commaButton: HTMLButtonElement = document.getElementById("comma-button")! as HTMLButtonElement;
 
-// The function to insert the specified text to the input filed
-function insertToInputField(text: string) {
-
-    // Get the caret position in the input field
-    inputField.focus();
-    const caretPosition: number = inputField.selectionStart!;
-
-    // Get the current input expression, and separate it into head/tail parts before/after the caret
-    const expression: string = inputField.value;
-    const expressionHead: string = expression.substring(0, caretPosition);
-    const expressionTail: string = expression.substring(caretPosition, expression.length);
-
-    // Insert the specified text
-    const updatedExpression = expressionHead + text + expressionTail;
-
-    // Update the contents of the input field
-    inputField.value = updatedExpression;
-
-    // Update the caret position
-    inputField.selectionStart = caretPosition + text.length;
-    inputField.selectionEnd = caretPosition + text.length;
-    inputField.focus();
-}
-
-
-// --------------------------------------------------------------------------------
-// Events for the Control Panel and the Input Field
-// --------------------------------------------------------------------------------
-
-// The event handler which is called when "Enter" key is pressed on the input field
-inputField.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-        calculate();
-    }
-});
-
-// The event handler which is called when "=" button is clicked
-calculationButton.addEventListener("click", () => {
-    calculate();
-});
-
-// The event handler which is called when "C" (Clear) button is clicked
-clearButton.addEventListener("click", () => {
-    inputField.value = "";
-    outputField.value = "";
-    inputField.focus();
-});
-
-// The event handler which is called when "BS" (Back Space) button is clicked
-backSpaceButton.addEventListener("click", () => {
-    
-    // Get the caret position in the input field
-    inputField.focus();
-    const caretPosition: number = inputField.selectionStart!;
-
-    // Get the current input expression, and separate it into head/tail parts before/after the caret
-    const expression: string = inputField.value;
-    const expressionHead: string = expression.substring(0, caretPosition);
-    const expressionTail: string = expression.substring(caretPosition, expression.length);
-
-    // Trim the last character of the expressionHead
-    const expressionHeadTrimmed: string = expressionHead.length === 0 ? "" : expressionHead.slice(0, -1);
-
-    // Insert the specified text
-    const updatedExpression = expressionHeadTrimmed + expressionTail;
-
-    // Update the contents of the input field
-    inputField.value = updatedExpression;
-
-    // Update the caret position
-    inputField.selectionStart = expressionHeadTrimmed.length;
-    inputField.selectionEnd = expressionHeadTrimmed.length;
-    inputField.focus();
-});
 
 // The function calculates the currently input expression, 
 // and display the result on the output field
@@ -152,6 +78,86 @@ function calculate() {
         }
     }
 }
+
+// The function to insert the specified text to the input filed
+function insertToInputField(text: string) {
+
+    // Get the caret position in the input field
+    inputField.focus();
+    const caretPosition: number = inputField.selectionStart!;
+
+    // Get the current input expression, and separate it into head/tail parts before/after the caret
+    const expression: string = inputField.value;
+    const expressionHead: string = expression.substring(0, caretPosition);
+    const expressionTail: string = expression.substring(caretPosition, expression.length);
+
+    // Insert the specified text
+    const updatedExpression = expressionHead + text + expressionTail;
+
+    // Update the contents of the input field
+    inputField.value = updatedExpression;
+
+    // Update the caret position
+    inputField.selectionStart = caretPosition + text.length;
+    inputField.selectionEnd = caretPosition + text.length;
+    inputField.focus();
+}
+
+// The function to remove a character from the input filed
+function removeCharFromInputField() {
+
+    // Get the caret position in the input field
+    inputField.focus();
+    const caretPosition: number = inputField.selectionStart!;
+
+    // Get the current input expression, and separate it into head/tail parts before/after the caret
+    const expression: string = inputField.value;
+    const expressionHead: string = expression.substring(0, caretPosition);
+    const expressionTail: string = expression.substring(caretPosition, expression.length);
+
+    // Trim the last character of the expressionHead
+    const expressionHeadTrimmed: string = expressionHead.length === 0 ? "" : expressionHead.slice(0, -1);
+
+    // Insert the specified text
+    const updatedExpression = expressionHeadTrimmed + expressionTail;
+
+    // Update the contents of the input field
+    inputField.value = updatedExpression;
+
+    // Update the caret position
+    inputField.selectionStart = expressionHeadTrimmed.length;
+    inputField.selectionEnd = expressionHeadTrimmed.length;
+    inputField.focus();
+}
+
+
+// --------------------------------------------------------------------------------
+// Events for the Control Panel and the Input Field
+// --------------------------------------------------------------------------------
+
+// The event handler which is called when "Enter" key is pressed on the input field
+inputField.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        calculate();
+    }
+});
+
+// The event handler which is called when "=" button is clicked
+calculationButton.addEventListener("click", () => {
+    calculate();
+});
+
+// The event handler which is called when "C" (Clear) button is clicked
+clearButton.addEventListener("click", () => {
+    inputField.value = "";
+    outputField.value = "";
+    inputField.focus();
+});
+
+// The event handler which is called when "BS" (Back Space) button is clicked
+backSpaceButton.addEventListener("click", () => {
+    removeCharFromInputField();
+});
 
 
 // --------------------------------------------------------------------------------
