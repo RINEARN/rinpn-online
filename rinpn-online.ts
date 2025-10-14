@@ -92,6 +92,17 @@ function calculate() {
     // Create an instance of Exevalator Engine
     let exevalator: Exevalator = new Exevalator();
 
+    // Connect functions: sin(x), cos(x), tan(x), etc.
+    exevalator.connectFunction("sin", new SinFunction());
+    exevalator.connectFunction("cos", new CosFunction());
+    exevalator.connectFunction("tan", new TanFunction());
+    exevalator.connectFunction("asin", new AsinFunction());
+    exevalator.connectFunction("acos", new AcosFunction());
+    exevalator.connectFunction("atan", new AtanFunction());
+    exevalator.connectFunction("abs", new AbsFunction());
+    exevalator.connectFunction("sqrt", new SqrtFunction());
+    exevalator.connectFunction("pow", new PowFunction());
+
     // Compute the value of the inputted expression,
     // and display the result on the result to the output field
     try {
@@ -327,3 +338,91 @@ closeParenButton.addEventListener("click", () => {
 spaceButton.addEventListener("click", () => {
     insertToInputField(" ");
 });
+
+
+// --------------------------------------------------------------------------------
+// Functions available in expressions: sin(x), cos(x), tan(x), etc.
+// --------------------------------------------------------------------------------
+
+class SinFunction implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length != 1) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: 1)");
+        }
+        return Math.sin(args[0]);
+    }
+}
+
+class CosFunction implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length != 1) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: 1)");
+        }
+        return Math.cos(args[0]);
+    }
+}
+
+class TanFunction implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length != 1) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: 1)");
+        }
+        return Math.tan(args[0]);
+    }
+}
+
+class AsinFunction implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length != 1) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: 1)");
+        }
+        return Math.asin(args[0]);
+    }
+}
+
+class AcosFunction implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length != 1) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: 1)");
+        }
+        return Math.acos(args[0]);
+    }
+}
+
+class AtanFunction implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length != 1) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: 1)");
+        }
+        return Math.atan(args[0]);
+    }
+}
+
+class AbsFunction implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length != 1) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: 1)");
+        }
+        return Math.abs(args[0]);
+    }
+}
+
+class SqrtFunction implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length != 1) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: 1)");
+        }
+        return Math.sqrt(args[0]);
+    }
+}
+
+class PowFunction implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length != 2) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: 2)");
+        }
+        return Math.pow(args[0], args[1]);
+    }
+}
+
+
