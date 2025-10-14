@@ -122,8 +122,8 @@ function calculate() {
     // and display the result on the result to the output field
     try {
         const result: number = exevalator.eval(expression);
-        const roundedResult: string = result.toPrecision(10);
-        outputField.value = `${roundedResult}`;
+        const formattedResult = formatResult(result);
+        outputField.value = `${formattedResult}`;
 
     } catch (error) {
         if (error instanceof ExevalatorError) {
@@ -133,6 +133,55 @@ function calculate() {
             console.error(error);
         }
     }
+}
+
+// The function to rounds and formats the calculation result
+function formatResult(rawResult: number): string {
+
+    // Returns NaN or Inifinity as it is
+    if (!Number.isFinite(rawResult)) {
+        return String(rawResult);
+    }
+
+    // Normalize -0 to +0 before formatting
+    if (Object.is(rawResult, -0)) {
+        rawResult = 0;
+    }
+
+    // Round the result
+    const roundedResult: string = rawResult.toPrecision(10);
+
+    // Split the result by "e" or "E", which is the head of the exponent part
+    const eSplitted: string[] = roundedResult.split(/e/i);
+    let mantissaPart = 0 < eSplitted.length ? eSplitted[0] : "";
+    let exponentPart = 1 < eSplitted.length ? eSplitted[1] : "";
+
+    // Trim leading "+"" in exponent
+    if (exponentPart.startsWith("+")) {
+        exponentPart = exponentPart.slice(1);
+    }
+
+    // If the mantissaPart has ".", 
+    // which means that the tail digits of mantissaPart are fractional digits
+    if (mantissaPart.includes(".")) {
+
+        // Trimmes "0" at the tail of the fractional digits, repeatedly
+        while (mantissaPart.endsWith("0")) {
+            mantissaPart = mantissaPart.slice(0, -1);
+        }
+
+        // If there are no longer fractinal digits, trim the decimal point
+        if (mantissaPart.endsWith(".")) {
+            mantissaPart = mantissaPart.slice(0, -1);
+        }
+    }
+
+    // Concatenate the zero-trimmed mantissa part and the exponent part, if exists
+    let formattedResult: string = mantissaPart;
+    if (0 < exponentPart.length) {
+        formattedResult += "E" + exponentPart;
+    }
+    return formattedResult;
 }
 
 // The function to insert the specified text to the input filed
