@@ -3,7 +3,9 @@
 ( &raquo; [English](./README.md) )
 
 
-関数電卓 [RINPn](https://github.com/RINEARN/rinpn) の、ブラウザ上でも利用可能な簡易版です。
+関数電卓 [RINPn (りんぷん)](https://github.com/RINEARN/rinpn) の、ブラウザ上でも利用可能な簡易版です。
+
+![Screen](./screen.png)
 
 
 ## 使い方

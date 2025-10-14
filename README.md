@@ -3,7 +3,9 @@
 ( &raquo; [Japanese](./README_JAPANESE.md) )
 
 
-Simplified version of [RINPn](https://github.com/RINEARN/rinpn), available on web browsers.
+Simplified version of a scientific calculator app [RINPn](https://github.com/RINEARN/rinpn), available on web browsers.
+
+![Screen](./screen.png)
 
 
 ## How to Use
