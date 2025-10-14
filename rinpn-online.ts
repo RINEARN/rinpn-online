@@ -29,6 +29,48 @@ const calculationButton: HTMLButtonElement = document.getElementById("calculatio
 const clearButton: HTMLButtonElement = document.getElementById("clear-button")! as HTMLButtonElement;
 const backSpaceButton: HTMLButtonElement = document.getElementById("back-space-button")! as HTMLButtonElement;
 
+// Buttons on the Number Panel
+const num0Button: HTMLButtonElement = document.getElementById("num0-button")! as HTMLButtonElement;
+const num1Button: HTMLButtonElement = document.getElementById("num1-button")! as HTMLButtonElement;
+const num2Button: HTMLButtonElement = document.getElementById("num2-button")! as HTMLButtonElement;
+const num3Button: HTMLButtonElement = document.getElementById("num3-button")! as HTMLButtonElement;
+const num4Button: HTMLButtonElement = document.getElementById("num4-button")! as HTMLButtonElement;
+const num5Button: HTMLButtonElement = document.getElementById("num5-button")! as HTMLButtonElement;
+const num6Button: HTMLButtonElement = document.getElementById("num6-button")! as HTMLButtonElement;
+const num7Button: HTMLButtonElement = document.getElementById("num7-button")! as HTMLButtonElement;
+const num8Button: HTMLButtonElement = document.getElementById("num8-button")! as HTMLButtonElement;
+const num9Button: HTMLButtonElement = document.getElementById("num9-button")! as HTMLButtonElement;
+const addButton: HTMLButtonElement = document.getElementById("add-button")! as HTMLButtonElement;
+const subButton: HTMLButtonElement = document.getElementById("sub-button")! as HTMLButtonElement;
+const mulButton: HTMLButtonElement = document.getElementById("mul-button")! as HTMLButtonElement;
+const divButton: HTMLButtonElement = document.getElementById("div-button")! as HTMLButtonElement;
+const dotButton: HTMLButtonElement = document.getElementById("dot-button")! as HTMLButtonElement;
+const commaButton: HTMLButtonElement = document.getElementById("comma-button")! as HTMLButtonElement;
+
+// The function to insert the specified text to the input filed
+function insertToInputField(text: string) {
+
+    // Get the caret position in the input field
+    inputField.focus();
+    const caretPosition: number = inputField.selectionStart!;
+
+    // Get the current input expression, and separate it into head/tail parts before/after the caret
+    const expression: string = inputField.value;
+    const expressionHead: string = expression.substring(0, caretPosition);
+    const expressionTail: string = expression.substring(caretPosition, expression.length);
+
+    // Insert the specified text
+    const updatedExpression = expressionHead + text + expressionTail;
+
+    // Update the contents of the input field
+    inputField.value = updatedExpression;
+
+    // Update the caret position
+    inputField.selectionStart = caretPosition + text.length;
+    inputField.selectionEnd = caretPosition + text.length;
+    inputField.focus();
+}
+
 
 // --------------------------------------------------------------------------------
 // Events for the Control Panel and the Input Field
@@ -99,3 +141,60 @@ function calculate() {
         }
     }
 }
+
+
+// --------------------------------------------------------------------------------
+// Events for the Number Panel
+// --------------------------------------------------------------------------------
+
+num0Button.addEventListener("click", () => {
+    insertToInputField("0");
+});
+num1Button.addEventListener("click", () => {
+    insertToInputField("1");
+});
+num2Button.addEventListener("click", () => {
+    insertToInputField("2");
+});
+num3Button.addEventListener("click", () => {
+    insertToInputField("3");
+});
+num4Button.addEventListener("click", () => {
+    insertToInputField("4");
+});
+num5Button.addEventListener("click", () => {
+    insertToInputField("5");
+});
+num6Button.addEventListener("click", () => {
+    insertToInputField("6");
+});
+num7Button.addEventListener("click", () => {
+    insertToInputField("7");
+});
+num8Button.addEventListener("click", () => {
+    insertToInputField("8");
+});
+num9Button.addEventListener("click", () => {
+    insertToInputField("9");
+});
+dotButton.addEventListener("click", () => {
+    insertToInputField(".");
+});
+commaButton.addEventListener("click", () => {
+    insertToInputField(",");
+});
+addButton.addEventListener("click", () => {
+    insertToInputField("+");
+});
+subButton.addEventListener("click", () => {
+    insertToInputField("-");
+});
+mulButton.addEventListener("click", () => {
+    insertToInputField("*");
+});
+divButton.addEventListener("click", () => {
+    insertToInputField("/");
+});
+
+
+
