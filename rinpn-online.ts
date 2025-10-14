@@ -106,7 +106,11 @@ function calculate() {
     exevalator.connectFunction("ln", new LnFunction());
     exevalator.connectFunction("log10", new Log10Function());
     exevalator.connectFunction("sum", new SumFunction());
+    exevalator.connectFunction("van", new VanFunction());
+    exevalator.connectFunction("van1", new Van1Function());
     exevalator.connectFunction("mean", new MeanFunction());
+    exevalator.connectFunction("sdn", new SdnFunction());
+    exevalator.connectFunction("sdn1", new Sdn1Function());
 
     // Compute the value of the inputted expression,
     // and display the result on the result to the output field
@@ -466,6 +470,42 @@ class SumFunction implements ExevalatorFunctionInterface {
     }
 }
 
+class VanFunction implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length === 0) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: more than 1)");
+        }
+        return StatisticsCalculator.van(args);
+    }
+}
+
+class Van1Function implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length <= 1) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: more than 2)");
+        }
+        return StatisticsCalculator.van1(args);
+    }
+}
+
+class SdnFunction implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length === 0) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: more than 1)");
+        }
+        return StatisticsCalculator.sdn(args);
+    }
+}
+
+class Sdn1Function implements ExevalatorFunctionInterface {
+    public invoke(args: number[]): number {
+        if (args.length <= 1) {
+            throw new ExevalatorError("Unexpected number of arguments. (expected: more than 2)");
+        }
+        return StatisticsCalculator.sdn1(args);
+    }
+}
+
 class MeanFunction implements ExevalatorFunctionInterface {
     public invoke(args: number[]): number {
         if (args.length === 0) {
@@ -475,12 +515,13 @@ class MeanFunction implements ExevalatorFunctionInterface {
     }
 }
 
+// The class providing internal calculations of sum/mean/van/van1/sdn/sdn1 functions
 class StatisticsCalculator {
 
-    // Calculate the summation value of the args.
+    // Calculate the summation value of the args
     public static sum(args: number[]): number {
         const argCount = args.length;
-        var sumValue: number = 0;
+        var sumValue: number = 0.0;
         for (var iarg: number = 0; iarg<argCount; iarg++) {
             const arg: number = args[iarg];
             sumValue += arg;
@@ -488,12 +529,56 @@ class StatisticsCalculator {
         return sumValue;
     }
 
-    // Calculate the summation value of the args.
+    // Calculate the summation value of the args
     public static mean(args: number[]): number {
         const argCount = args.length;
         const sumValue: number = StatisticsCalculator.sum(args);
         const meanValue = sumValue / argCount;
         return meanValue;
+    }
+
+    // Calculate the variance (n)
+    public static van(args: number[]): number {
+        const argCount = args.length;
+        const meanValue: number = StatisticsCalculator.mean(args);
+        var sumSquareDiffValue = 0.0;
+
+        for (var iarg: number = 0; iarg<argCount; iarg++) {
+            const arg: number = args[iarg];
+            const squareDiffValue = (arg - meanValue) * (arg - meanValue);
+            sumSquareDiffValue += squareDiffValue;
+        }
+
+        const vanValue = sumSquareDiffValue / argCount;
+        return vanValue;
+    }
+
+    // Calculate the variance (n - 1)
+    public static van1(args: number[]): number {
+        const argCount = args.length;
+        const meanValue: number = StatisticsCalculator.mean(args);
+        var sumSquareDiffValue = 0.0;
+
+        for (var iarg: number = 0; iarg<argCount; iarg++) {
+            const arg: number = args[iarg];
+            const squareDiffValue = (arg - meanValue) * (arg - meanValue);
+            sumSquareDiffValue += squareDiffValue;
+        }
+
+        const van1Value = sumSquareDiffValue / (argCount - 1);
+        return van1Value;
+    }
+
+    // Calculate the standard deviation (n)
+    public static sdn(args: number[]): number {
+        const sdnValue = Math.sqrt(StatisticsCalculator.van(args));
+        return sdnValue;
+    }
+
+    // Calculate the standard deviation (n - 1)
+    public static sdn1(args: number[]): number {
+        const sdnValue = Math.sqrt(StatisticsCalculator.van1(args));
+        return sdnValue;
     }
 }
 
