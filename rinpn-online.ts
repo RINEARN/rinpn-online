@@ -47,6 +47,36 @@ const divButton: HTMLButtonElement = document.getElementById("div-button")! as H
 const dotButton: HTMLButtonElement = document.getElementById("dot-button")! as HTMLButtonElement;
 const commaButton: HTMLButtonElement = document.getElementById("comma-button")! as HTMLButtonElement;
 
+// Buttons on the Function Panel
+const sinButton: HTMLButtonElement = document.getElementById("sin-button")! as HTMLButtonElement;
+const cosButton: HTMLButtonElement = document.getElementById("cos-button")! as HTMLButtonElement;
+const tanButton: HTMLButtonElement = document.getElementById("tan-button")! as HTMLButtonElement;
+const asinButton: HTMLButtonElement = document.getElementById("asin-button")! as HTMLButtonElement;
+const acosButton: HTMLButtonElement = document.getElementById("acos-button")! as HTMLButtonElement;
+const atanButton: HTMLButtonElement = document.getElementById("atan-button")! as HTMLButtonElement;
+const absButton: HTMLButtonElement = document.getElementById("abs-button")! as HTMLButtonElement;
+const sqrtButton: HTMLButtonElement = document.getElementById("sqrt-button")! as HTMLButtonElement;
+const powButton: HTMLButtonElement = document.getElementById("pow-button")! as HTMLButtonElement;
+const expButton: HTMLButtonElement = document.getElementById("exp-button")! as HTMLButtonElement;
+const lnButton: HTMLButtonElement = document.getElementById("ln-button")! as HTMLButtonElement;
+const log10Button: HTMLButtonElement = document.getElementById("log10-button")! as HTMLButtonElement;
+const sumButton: HTMLButtonElement = document.getElementById("sum-button")! as HTMLButtonElement;
+const vanButton: HTMLButtonElement = document.getElementById("van-button")! as HTMLButtonElement;
+const van1Button: HTMLButtonElement = document.getElementById("van1-button")! as HTMLButtonElement;
+const meanButton: HTMLButtonElement = document.getElementById("mean-button")! as HTMLButtonElement;
+const sdnButton: HTMLButtonElement = document.getElementById("sdn-button")! as HTMLButtonElement;
+const sdn1Button: HTMLButtonElement = document.getElementById("sdn1-button")! as HTMLButtonElement;
+const radButton: HTMLButtonElement = document.getElementById("rad-button")! as HTMLButtonElement;
+const degButton: HTMLButtonElement = document.getElementById("deg-button")! as HTMLButtonElement;
+const piButton: HTMLButtonElement = document.getElementById("pi-button")! as HTMLButtonElement;
+const openParenButton: HTMLButtonElement = document.getElementById("open-paren-button")! as HTMLButtonElement;
+const closeParenButton: HTMLButtonElement = document.getElementById("close-paren-button")! as HTMLButtonElement;
+const spaceButton: HTMLButtonElement = document.getElementById("space-button")! as HTMLButtonElement;
+
+
+// --------------------------------------------------------------------------------
+// Important Processes
+// --------------------------------------------------------------------------------
 
 // The function calculates the currently input expression, 
 // and display the result on the output field
@@ -214,4 +244,86 @@ divButton.addEventListener("click", () => {
 });
 
 
+// --------------------------------------------------------------------------------
+// Events for the Function Panel
+// --------------------------------------------------------------------------------
 
+sinButton.addEventListener("click", () => {
+    insertToInputField("sin(");
+});
+cosButton.addEventListener("click", () => {
+    insertToInputField("cos(");
+});
+tanButton.addEventListener("click", () => {
+    insertToInputField("tan(");
+});
+
+asinButton.addEventListener("click", () => {
+    insertToInputField("asin(");
+});
+acosButton.addEventListener("click", () => {
+    insertToInputField("acos(");
+});
+atanButton.addEventListener("click", () => {
+    insertToInputField("atan(");
+});
+
+absButton.addEventListener("click", () => {
+    insertToInputField("abs(");
+});
+sqrtButton.addEventListener("click", () => {
+    insertToInputField("sqrt(");
+});
+powButton.addEventListener("click", () => {
+    insertToInputField("pow(");
+});
+
+expButton.addEventListener("click", () => {
+    insertToInputField("exp(");
+});
+lnButton.addEventListener("click", () => {
+    insertToInputField("ln(");
+});
+log10Button.addEventListener("click", () => {
+    insertToInputField("log10(");
+});
+
+sumButton.addEventListener("click", () => {
+    insertToInputField("sum(");
+});
+vanButton.addEventListener("click", () => {
+    insertToInputField("van(");
+});
+van1Button.addEventListener("click", () => {
+    insertToInputField("van1(");
+});
+
+meanButton.addEventListener("click", () => {
+    insertToInputField("mean(");
+});
+sdnButton.addEventListener("click", () => {
+    insertToInputField("sdn(");
+});
+sdn1Button.addEventListener("click", () => {
+    insertToInputField("sdn1(");
+});
+
+radButton.addEventListener("click", () => {
+    insertToInputField("rad(");
+});
+degButton.addEventListener("click", () => {
+    insertToInputField("deg(");
+});
+piButton.addEventListener("click", () => {
+    insertToInputField("PI");
+});
+
+openParenButton.addEventListener("click", () => {
+    insertToInputField("(");
+});
+closeParenButton.addEventListener("click", () => {
+    insertToInputField(")");
+});
+spaceButton.addEventListener("click", () => {
+    insertToInputField(" ");
+});
