@@ -24,10 +24,10 @@
     git clone https://github.com/RINEARN/rinpn-online.git
 
     # アプリのフォルダ内に移動
-    cd ./rinpn-online/English
+    cd ./rinpn-online/Japanese
 
     # 環境構築
-    npm init   # Only when "package.json" is not initialized yet
+    npm init   # "package.json" をまだ初期化していない場合のみ
     npm install --save-dev typescript
     npm install --save-dev @types/node 
     npm install --save-dev esbuild

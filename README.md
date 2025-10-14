@@ -3,7 +3,7 @@
 ( &raquo; [Japanese](./README_JAPANESE.md) )
 
 
-Simplified version of [RINPn](https://github.com/RINEARN/rinpn) which runs on web browsers.
+Simplified version of [RINPn](https://github.com/RINEARN/rinpn), available on web browsers.
 
 
 ## How to Use
