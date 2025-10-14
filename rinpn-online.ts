@@ -98,16 +98,27 @@ clearButton.addEventListener("click", () => {
 // The event handler which is called when "BS" (Back Space) button is clicked
 backSpaceButton.addEventListener("click", () => {
     
-    // Get the expression from the UI
-    var expression: string = inputField.value;
+    // Get the caret position in the input field
+    inputField.focus();
+    const caretPosition: number = inputField.selectionStart!;
 
-    // Remove the last character in the expression
-    if (1 <= expression.length) {
-        expression = expression.slice(0, -1);
-    }
+    // Get the current input expression, and separate it into head/tail parts before/after the caret
+    const expression: string = inputField.value;
+    const expressionHead: string = expression.substring(0, caretPosition);
+    const expressionTail: string = expression.substring(caretPosition, expression.length);
 
-    // Update the content of the input field
-    inputField.value = expression;
+    // Trim the last character of the expressionHead
+    const expressionHeadTrimmed: string = expressionHead.length === 0 ? "" : expressionHead.slice(0, -1);
+
+    // Insert the specified text
+    const updatedExpression = expressionHeadTrimmed + expressionTail;
+
+    // Update the contents of the input field
+    inputField.value = updatedExpression;
+
+    // Update the caret position
+    inputField.selectionStart = expressionHeadTrimmed.length;
+    inputField.selectionEnd = expressionHeadTrimmed.length;
     inputField.focus();
 });
 
