@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<title>RINPn Online</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Simplified version of a scientific calculator app RINPn, available on web browsers.">
 
 	<style>
 		@media (min-width: 0px) {
@@ -19,11 +20,18 @@
 			body { height: 90vh; background-color: #afddff; display: flex; flex-direction: column; }
 		}
 
-		table { width: 100%; height: 100%; }
+		@media (min-height: 0px) {
+			.visibility-switch { visibility: hidden; }
+		}
+		@media (min-height: 400px) {
+			.visibility-switch { visibility: visible; }
+		}
+
+		table { width: 100%; height: 100%; border-spacing: 0px; }
 		tbody { width: 100%; height: 100%; }
 		tr { width: 100%; height: 100%; }
-		td { text-align: center; margin: 0px; padding: 0px;}
-		button { width: 100%; height: 100%; font-size: 135%; margin: 0px; padding: 0px; }
+		td { text-align: center; margin: 0px; padding-top: 1px; padding-bottom: 1px; padding-right: 1px; padding-left: 0px; }
+		button { width: 100%; height: 100%; font-size: 135%; }
 	</style>
 </head>
 
@@ -46,11 +54,11 @@
 
 
 <!-- Key Panel -->
-<div style="padding: 0px 5px 0px 3px; width: 100%; height: 100%; flex-grow: 1;">
+<div style="padding: 0px 0px 0px 0px; width: 100%; height: 100%; flex-grow: 1;">
 <div style="width: 100%; height: 100%; display: flex;">
 		
 		<!-- Function Panel -->
-		<div style="padding: 0px 1px 0px 0px; height: 100%; flex-grow: 7;">
+		<div style="padding: 0px 0px 0px 5px; height: 100%; flex-grow: 7;">
 			<table>
 				<tbody>
 					<tr style="height: 12.5%;">
@@ -98,7 +106,7 @@
 		</div>
 		
 		<!-- Number Panel -->
-		<div style="padding: 0px 2px 0px 2px; height: 100%; flex-grow: 12;">
+		<div style="padding: 0px 6px 0px 6px; height: 100%; flex-grow: 12;">
 			<table>
 				<tbody>
 					<tr style="height: 25%;">
@@ -130,7 +138,7 @@
 		</div>
 		
 		<!-- Command Panel -->
-		<div style="padding: 0px 5px 0px 1px; height: 100%; flex-grow: 3;">
+		<div style="padding: 0px 3px 0px 0px; height: 100%; flex-grow: 3;">
 			<table>
 				<tbody>
 					<tr style="height: 33%;">
@@ -149,10 +157,10 @@
 </div>
 </div>
 
+
 <!-- Info Panel -->
-<div style="width: 100%; display: flex; padding-top: 14px;">
-	<div style="flex-grow: 5; text-align: left; margin-left: 5px; font-size: small;">
-		|
+<div class="visibility-switch" style="width: 100%; display: flex; position: fixed; bottom: 5px;">
+	<div style="flex-grow: 5; text-align: left; font-size: small;">
 		RINPn Online Ver.<span id="version-label"> --- (set by window.onload in the script)</span>
 		|
 		<a href="https://www.rinearn.com/en-us/rinpn/">Website</a>
@@ -163,7 +171,7 @@
 	<div style="flex-grow: 1;">
 		&nbsp;&nbsp;&nbsp;&nbsp;
 	</div>
-	<div style="flex-grow: 1; text-align: right; margin-right: 5px; font-size: small;">
+	<div style="flex-grow: 1; text-align: right; margin-right: 16px; font-size: small;">
 		Powered by <a href="https://www.rinearn.com/">RINEARN</a>
 	</div>
 </div>
