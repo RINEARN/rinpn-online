@@ -1305,18 +1305,24 @@
       });
     }
   }
-  function removeCharFromInputField() {
+  function removeCharOrAreaFromInputField() {
     inputField.focus();
-    const caretPosition = inputField.selectionStart;
-    const expression = inputField.value;
-    const expressionHead = expression.substring(0, caretPosition);
-    const expressionTail = expression.substring(caretPosition, expression.length);
-    const expressionHeadTrimmed = expressionHead.length === 0 ? "" : expressionHead.slice(0, -1);
-    const updatedExpression = expressionHeadTrimmed + expressionTail;
-    inputField.value = updatedExpression;
-    inputField.selectionStart = expressionHeadTrimmed.length;
-    inputField.selectionEnd = expressionHeadTrimmed.length;
-    inputField.focus();
+    const caretPositionStart = inputField.selectionStart ?? inputField.value.length;
+    const caretPositionEnd = inputField.selectionEnd ?? caretPositionStart;
+    if (caretPositionStart === caretPositionEnd) {
+      const expression = inputField.value;
+      const expressionHead = expression.substring(0, caretPositionStart);
+      const expressionTail = expression.substring(caretPositionStart, expression.length);
+      const expressionHeadTrimmed = expressionHead.length === 0 ? "" : expressionHead.slice(0, -1);
+      const updatedExpression = expressionHeadTrimmed + expressionTail;
+      inputField.value = updatedExpression;
+      inputField.selectionStart = expressionHeadTrimmed.length;
+      inputField.selectionEnd = expressionHeadTrimmed.length;
+      inputField.focus();
+    } else {
+      inputField.setRangeText("", caretPositionStart, caretPositionEnd, "end");
+      inputField.focus();
+    }
   }
   function moveCaretToLeft() {
     inputField.focus();
@@ -1355,7 +1361,7 @@
     inputField.focus();
   });
   backSpaceButton.addEventListener("click", () => {
-    removeCharFromInputField();
+    removeCharOrAreaFromInputField();
   });
   leftButton.addEventListener("click", () => {
     moveCaretToLeft();

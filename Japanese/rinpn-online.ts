@@ -223,31 +223,41 @@ function insertToInputField(text: string) {
     }
 }
 
-// The function to remove a character from the input filed
-function removeCharFromInputField() {
+// The function to remove a character, or selected content from the input filed
+function removeCharOrAreaFromInputField() {
 
     // Get the caret position in the input field
     inputField.focus();
-    const caretPosition: number = inputField.selectionStart!;
+    const caretPositionStart: number = inputField.selectionStart ?? inputField.value.length;
+    const caretPositionEnd: number   = inputField.selectionEnd   ?? caretPositionStart;
 
-    // Get the current input expression, and separate it into head/tail parts before/after the caret
-    const expression: string = inputField.value;
-    const expressionHead: string = expression.substring(0, caretPosition);
-    const expressionTail: string = expression.substring(caretPosition, expression.length);
+    // If no area is selected, remove a character before the caret position
+    if (caretPositionStart === caretPositionEnd) {
 
-    // Trim the last character of the expressionHead
-    const expressionHeadTrimmed: string = expressionHead.length === 0 ? "" : expressionHead.slice(0, -1);
+        // Get the current input expression, and separate it into head/tail parts before/after the caret
+        const expression: string = inputField.value;
+        const expressionHead: string = expression.substring(0, caretPositionStart);
+        const expressionTail: string = expression.substring(caretPositionStart, expression.length);
 
-    // Insert the specified text
-    const updatedExpression = expressionHeadTrimmed + expressionTail;
+        // Trim the last character of the expressionHead
+        const expressionHeadTrimmed: string = expressionHead.length === 0 ? "" : expressionHead.slice(0, -1);
 
-    // Update the contents of the input field
-    inputField.value = updatedExpression;
+        // Insert the specified text
+        const updatedExpression = expressionHeadTrimmed + expressionTail;
 
-    // Update the caret position
-    inputField.selectionStart = expressionHeadTrimmed.length;
-    inputField.selectionEnd = expressionHeadTrimmed.length;
-    inputField.focus();
+        // Update the contents of the input field
+        inputField.value = updatedExpression;
+
+        // Update the caret position
+        inputField.selectionStart = expressionHeadTrimmed.length;
+        inputField.selectionEnd = expressionHeadTrimmed.length;
+        inputField.focus();
+
+    // If any area is selected, remove the selected content
+    } else {
+        inputField.setRangeText("", caretPositionStart, caretPositionEnd, "end");
+        inputField.focus();
+    }
 }
 
 // The function to move the caret in the input field to the left
@@ -302,7 +312,7 @@ clearButton.addEventListener("click", () => {
 
 // The event handler which is called when "BS" (Back Space) button is clicked
 backSpaceButton.addEventListener("click", () => {
-    removeCharFromInputField();
+    removeCharOrAreaFromInputField();
 });
 
 // The event handlers which are called when "<" or ">" buttons is clicked
@@ -707,5 +717,3 @@ class StatisticsCalculator {
         return sdnValue;
     }
 }
-
-
