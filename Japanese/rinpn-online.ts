@@ -16,7 +16,7 @@ import Exevalator, {ExevalatorFunctionInterface, ExevalatorError} from "./exeval
  */
 
 // The version of RINPn Online
-const RINPN_ONLINE_VERSION: string = "0.0.0";
+const RINPN_ONLINE_VERSION: string = "0.1.0";
 
 // --------------------------------------------------------------------------------
 // DOM Elements of UI

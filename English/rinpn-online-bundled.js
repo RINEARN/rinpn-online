@@ -1169,7 +1169,7 @@
   };
 
   // rinpn-online.ts
-  var RINPN_ONLINE_VERSION = "0.0.0";
+  var RINPN_ONLINE_VERSION = "0.1.0";
   var versionLabel = document.getElementById("version-label");
   var inputField = document.getElementById("input-field");
   var outputField = document.getElementById("output-field");
