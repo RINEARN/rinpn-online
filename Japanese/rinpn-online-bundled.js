@@ -1173,6 +1173,9 @@
   var versionLabel = document.getElementById("version-label");
   var inputField = document.getElementById("input-field");
   var outputField = document.getElementById("output-field");
+  var leftButton = document.getElementById("left-button");
+  var rightButton = document.getElementById("right-button");
+  var calculationSmallButton = document.getElementById("calculation-small-button");
   var calculationButton = document.getElementById("calculation-button");
   var clearButton = document.getElementById("clear-button");
   var backSpaceButton = document.getElementById("back-space-button");
@@ -1314,12 +1317,35 @@
     inputField.selectionEnd = expressionHeadTrimmed.length;
     inputField.focus();
   }
+  function moveCaretToLeft() {
+    inputField.focus();
+    let caretPosition = inputField.selectionStart;
+    caretPosition--;
+    if (caretPosition < 0) {
+      caretPosition = 0;
+    }
+    inputField.selectionStart = caretPosition;
+    inputField.selectionEnd = caretPosition;
+  }
+  function moveCaretToRight() {
+    inputField.focus();
+    let caretPosition = inputField.selectionStart;
+    caretPosition++;
+    if (inputField.value.length < caretPosition) {
+      caretPosition = inputField.value.length;
+    }
+    inputField.selectionStart = caretPosition;
+    inputField.selectionEnd = caretPosition;
+  }
   inputField.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       calculate();
     }
   });
   calculationButton.addEventListener("click", () => {
+    calculate();
+  });
+  calculationSmallButton.addEventListener("click", () => {
     calculate();
   });
   clearButton.addEventListener("click", () => {
@@ -1329,6 +1355,12 @@
   });
   backSpaceButton.addEventListener("click", () => {
     removeCharFromInputField();
+  });
+  leftButton.addEventListener("click", () => {
+    moveCaretToLeft();
+  });
+  rightButton.addEventListener("click", () => {
+    moveCaretToRight();
   });
   num0Button.addEventListener("click", () => {
     insertToInputField("0");

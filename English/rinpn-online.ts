@@ -29,6 +29,11 @@ const versionLabel: HTMLSpanElement = document.getElementById("version-label")! 
 const inputField: HTMLInputElement = document.getElementById("input-field")! as HTMLInputElement;
 const outputField: HTMLInputElement = document.getElementById("output-field")! as HTMLInputElement;
 
+// Buttons under INPUT field
+const leftButton: HTMLButtonElement = document.getElementById("left-button")! as HTMLButtonElement;
+const rightButton: HTMLButtonElement = document.getElementById("right-button")! as HTMLButtonElement;
+const calculationSmallButton: HTMLButtonElement = document.getElementById("calculation-small-button")! as HTMLButtonElement;
+
 // Buttons on the Control Panel
 const calculationButton: HTMLButtonElement = document.getElementById("calculation-button")! as HTMLButtonElement;
 const clearButton: HTMLButtonElement = document.getElementById("clear-button")! as HTMLButtonElement;
@@ -245,6 +250,29 @@ function removeCharFromInputField() {
     inputField.focus();
 }
 
+// The function to move the caret in the input field to the left
+function moveCaretToLeft() {
+    inputField.focus();
+    let caretPosition: number = inputField.selectionStart!;
+    caretPosition--;
+    if (caretPosition < 0) {
+        caretPosition = 0;
+    }
+    inputField.selectionStart = caretPosition;
+    inputField.selectionEnd = caretPosition;
+}
+
+// The function to move the caret in the input field to the right
+function moveCaretToRight() {
+    inputField.focus();
+    let caretPosition: number = inputField.selectionStart!;
+    caretPosition++;
+    if (inputField.value.length < caretPosition) {
+        caretPosition = inputField.value.length;
+    }
+    inputField.selectionStart = caretPosition;
+    inputField.selectionEnd = caretPosition;
+}
 
 // --------------------------------------------------------------------------------
 // Events for the Control Panel and the Input Field
@@ -257,8 +285,11 @@ inputField.addEventListener("keydown", (event) => {
     }
 });
 
-// The event handler which is called when "=" button is clicked
+// The event handlers which are called when "=" buttons are clicked
 calculationButton.addEventListener("click", () => {
+    calculate();
+});
+calculationSmallButton.addEventListener("click", () => {
     calculate();
 });
 
@@ -272,6 +303,14 @@ clearButton.addEventListener("click", () => {
 // The event handler which is called when "BS" (Back Space) button is clicked
 backSpaceButton.addEventListener("click", () => {
     removeCharFromInputField();
+});
+
+// The event handlers which are called when "<" or ">" buttons is clicked
+leftButton.addEventListener("click", () => {
+    moveCaretToLeft();
+});
+rightButton.addEventListener("click", () => {
+    moveCaretToRight();
 });
 
 

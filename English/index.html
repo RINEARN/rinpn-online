@@ -42,13 +42,29 @@
 <!-- INPUT/OUTPUT Panel -->
 <div style="padding: 0px 5px 10px 5px;">
 
-	<label for="input-field" style="font-size: 80%; font-weight: bold; color: #555555;">INPUT</label>
-	<br />
-	<input id="input-field" type="text" value="" inputmode="none" style="box-sizing: border-box; width:100%; background-color: #777777; color: #aaffaa; font-size: 114%; margin-bottom: 3px;">
-	<br />
-	<label for="output-field" style="font-size: 80%; font-weight: bold; color: #555555;">OUTPUT</label>
-	<br />
-	<input id="output-field" type="text" value="" inputmode="none" style="box-sizing: border-box; width:100%; background-color: #777777; color: #aaffaa; font-size: 114%; margin-bottom: 3px;">
+	<!--  INPUT label and field -->
+	<div>
+		<label for="input-field" style="font-size: 80%; font-weight: bold; color: #555555;">INPUT</label>
+		<br />
+		<input id="input-field" type="text" value="" inputmode="none" style="box-sizing: border-box; width:100%; background-color: #777777; color: #aaffaa; font-size: 114%; margin-bottom: 0px;">
+	</div>
+
+	<!-- OUTPUT label and small buttons -->
+	<div div style="display: flex;">
+		<div style="flex-grow: 5; text-align: left; margin-top: 3px;">
+			<label for="output-field" style="font-size: 80%; font-weight: bold; color: #555555;">OUTPUT</label>
+		</div>
+		<div style="flex-grow: 1; text-align: right;">
+			<button id="left-button" style="width: 25px; height: 25px; font-size: 12px; margin-bottom: 2px; padding: 0px;">&lt;</button>
+			<button id="right-button" style="width: 25px; height: 25px; font-size: 12px; margin-bottom: 2px; padding: 0px;">&gt;</button>
+			<button id="calculation-small-button" style="width: 25px; height: 25px; font-size: 12px; margin-bottom: 2px; padding: 0px;">=</button>
+		</div>
+	</div>
+
+	<!-- OUTPUT field -->
+	<div>
+		<input id="output-field" type="text" value="" inputmode="none" style="box-sizing: border-box; width:100%; background-color: #777777; color: #aaffaa; font-size: 114%; margin-bottom: 3px;">
+	</div>
 
 </div>
 
@@ -153,7 +169,6 @@
 				</tbody>
 			</table>
 		</div>
-
 </div>
 </div>
 
