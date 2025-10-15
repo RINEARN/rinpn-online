@@ -3,30 +3,38 @@
 ( &raquo; [Japanese](./README_JAPANESE.md) )
 
 
-Simplified version of a scientific calculator app [RINPn](https://github.com/RINEARN/rinpn), available on web browsers.
+Simplified web version of [RINPn](https://github.com/RINEARN/rinpn), a scientific calculator.
 
 ![Screen](./screen.png)
 
 
 ## How to Use
 
-Open the following HTML file by your web browser (by double-clicking):
+To use RINPn right now in your browser, visit the [official RINPn website](https://www.rinearn.com/en-us/rinpn/) and click "**Open Online**." This will always launch the latest version.
+
+If you prefer to download this repository and run it locally, please **be sure to extract (unzip) the ZIP archive first (important).** After extraction, open the following HTML file in your web browser (double-clicking it is fine):
 
     English/index.html
 
-Then the calculator will be displayed on the web browser's screen.
+The calculator will appear inside your browser.
+
+If you plan to use RINPn regularly on your local machine, we recommend the desktop version instead of the online version. It offers more features, while the online version is significantly limited: [https://github.com/RINEARN/rinpn](https://github.com/RINEARN/rinpn)
+
+
+
+
 
 ## How to Build
 
-This app is an open source software. You can get the source code and build it as follows:
+This app is open-source software. You can obtain the source code and build it as follows:
 
     # Download the source code
     git clone https://github.com/RINEARN/rinpn-online.git
 
-    # Go to the app directory
+    # Change to the app directory
     cd ./rinpn-online/English
 
-    # Setup environment
+    # Set up the environment
     npm init   # Only when "package.json" is not initialized yet
     npm install --save-dev typescript
     npm install --save-dev @types/node 
@@ -35,7 +43,9 @@ This app is an open source software. You can get the source code and build it as
     # Build
     npx esbuild rinpn-online.ts --bundle --outfile=rinpn-online-bundled.js
 
-When all the building steps complete successfully, single JavaScript file "rinpn-online-bundled.js" is generated. The file will be loaded from index.html.
+When the build completes successfully, a single JavaScript file, `rinpn-online-bundled.js`, is generated. The file is loaded by `index.html`.
+
+Then, just open `index.html` in your browser to run the app.
 
 
 ## License
