@@ -1294,15 +1294,16 @@
   }
   function insertToInputField(text) {
     inputField.focus();
-    const caretPosition = inputField.selectionStart;
-    const expression = inputField.value;
-    const expressionHead = expression.substring(0, caretPosition);
-    const expressionTail = expression.substring(caretPosition, expression.length);
-    const updatedExpression = expressionHead + text + expressionTail;
-    inputField.value = updatedExpression;
-    inputField.selectionStart = caretPosition + text.length;
-    inputField.selectionEnd = caretPosition + text.length;
-    inputField.focus();
+    const caretPositionStart = inputField.selectionStart ?? inputField.value.length;
+    const caretPositionEnd = inputField.selectionEnd ?? caretPositionStart;
+    inputField.setRangeText(text, caretPositionStart, caretPositionEnd, "end");
+    const updatedCaretPosition = caretPositionEnd + text.length;
+    const isCaretAtEnd = inputField.value.length <= updatedCaretPosition;
+    if (isCaretAtEnd) {
+      requestAnimationFrame(() => {
+        inputField.scrollLeft = inputField.scrollWidth;
+      });
+    }
   }
   function removeCharFromInputField() {
     inputField.focus();

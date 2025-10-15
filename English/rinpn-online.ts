@@ -202,25 +202,25 @@ function formatResult(rawResult: number): string {
 // The function to insert the specified text to the input filed
 function insertToInputField(text: string) {
 
-    // Get the caret position in the input field
+    // Ensure the field is focused and get the current caret.
     inputField.focus();
-    const caretPosition: number = inputField.selectionStart!;
+    const caretPositionStart: number = inputField.selectionStart ?? inputField.value.length;
+    const caretPositionEnd: number   = inputField.selectionEnd   ?? caretPositionStart;
 
-    // Get the current input expression, and separate it into head/tail parts before/after the caret
-    const expression: string = inputField.value;
-    const expressionHead: string = expression.substring(0, caretPosition);
-    const expressionTail: string = expression.substring(caretPosition, expression.length);
+    // Insert the specified text into the content of the input field
+    inputField.setRangeText(text, caretPositionStart, caretPositionEnd, "end");
 
-    // Insert the specified text
-    const updatedExpression = expressionHead + text + expressionTail;
-
-    // Update the contents of the input field
-    inputField.value = updatedExpression;
-
-    // Update the caret position
-    inputField.selectionStart = caretPosition + text.length;
-    inputField.selectionEnd = caretPosition + text.length;
-    inputField.focus();
+    // In some cases, when the content width exceeds the input's visible width,
+    // the browser may not scroll far enough to reveal the last character after appending text at the end.
+    // To ensure the trailing character is visible,
+    // adjust the horizontal scroll position on the next frame.
+    const updatedCaretPosition = caretPositionEnd + text.length;
+    const isCaretAtEnd = inputField.value.length <= updatedCaretPosition;
+    if (isCaretAtEnd) {
+        requestAnimationFrame(() => {
+            inputField.scrollLeft = inputField.scrollWidth;
+        });
+    }
 }
 
 // The function to remove a character from the input filed
