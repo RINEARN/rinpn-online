@@ -5,7 +5,7 @@
 
 Simplified web version of [RINPn](https://github.com/RINEARN/rinpn), a scientific calculator.
 
-![Screen](./screen.png)
+![Screen](./img/screen.png)
 
 
 ## How to Use
