@@ -58,11 +58,7 @@ RINPn オンライン版の基本構造は非常にシンプルで、構成フ�
 
 それぞれの役割を図にすると、以下のようなイメージです。
 
-<div style="width: 100%; max-width: 350px;">
-
 ![Block Diagram](./img/block_diagram_japanese.png)
-
-</div>
 
 詳しくは、下記記事にて解説しています：
 

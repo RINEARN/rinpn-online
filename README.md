@@ -58,11 +58,7 @@ The basic architecture of RINPn Online is very simple. The core structure is jus
 
 Visualized, the architecture looks like this:
 
-<div style="width: 100%; max-width: 390px;">
-
 ![Block Diagram](./img/block_diagram_english.png)
-
-</div>
 
 For details, see the following article:
 
