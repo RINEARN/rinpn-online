@@ -48,6 +48,27 @@ When the build completes successfully, a single JavaScript file, `rinpn-online-b
 Then, just open `index.html` in your browser to run the app.
 
 
+## Architecture
+
+The basic architecture of RINPn Online is very simple. The core structure is just three files:
+
+* A single HTML file for the UI ( index.html )
+* A TypeScript library that performs expression evaluation ( exevalator.ts )
+* A TypeScript file that handles UI events and bridges them to the evaluator ( rinpn-online.ts )
+
+Visualized, the architecture looks like this:
+
+<div style="width: 100%; max-width: 390px;">
+
+![Block Diagram](./img/block_diagram_english.png)
+
+</div>
+
+For details, see the following article:
+
+* [Inside RINPn Online: Architecture Overview](https://www.rinearn.com/en-us/info/news/2025/1022-rinpn-online-architecture)
+
+
 ## License
 
 * RINPn Online: MIT License

@@ -46,6 +46,29 @@
 あとは、普通に index.html をブラウザで開くと動きます。
 
 
+## アーキテクチャ
+
+RINPn オンライン版の基本構造は非常にシンプルで、構成ファイルは：
+
+* 画面役のHTMLファイルが1枚（index.html）
+* 式の計算処理を担うTypeScriptライブラリが1枚（exevalator.ts）
+* 画面操作のイベントを受け、計算処理とを橋渡しするTypeScriptコードが1枚 ( rinpn-online.ts )
+
+の合計3枚のみです。なお、TypeScriptのコード2枚は、ビルドされて1枚のJavaScriptコード「rinpn-online-bundled.js」になります。
+
+それぞれの役割を図にすると、以下のようなイメージです。
+
+<div style="width: 100%; max-width: 350px;">
+
+![Block Diagram](./img/block_diagram_japanese.png)
+
+</div>
+
+詳しくは、下記記事にて解説しています：
+
+* [関数電卓 RINPn（りんぷん） オンライン版の内部構造を解説](https://www.rinearn.com/ja-jp/info/news/2025/1022-rinpn-online-architecture)
+
+
 ## ライセンス
 
 * RINPnオンライン版の本体: MIT License
