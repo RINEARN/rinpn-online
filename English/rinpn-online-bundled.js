@@ -283,12 +283,12 @@
         const word = tokenWords[itoken];
         if (word === "(") {
           parenthesisDepth++;
-          if (1 <= itoken && tokens[itoken - 1].type == 5 /* FUNCTION_IDENTIFIER */) {
+          if (1 <= itoken && tokens[itoken - 1].type == 4 /* FUNCTION_IDENTIFIER */) {
             callParenthesisDepths.add(parenthesisDepth);
             const op = StaticSettings.CALL_OPERATOR_SYMBOL_MAP.get(word.charAt(0));
             tokens[itoken] = new Token(1 /* OPERATOR */, word, op);
           } else {
-            tokens[itoken] = new Token(3 /* PARENTHESIS */, word);
+            tokens[itoken] = new Token(2 /* PARENTHESIS */, word);
           }
         } else if (word === ")") {
           if (callParenthesisDepths.has(parenthesisDepth)) {
@@ -296,9 +296,12 @@
             const op = StaticSettings.CALL_OPERATOR_SYMBOL_MAP.get(word.charAt(0));
             tokens[itoken] = new Token(1 /* OPERATOR */, word, op);
           } else {
-            tokens[itoken] = new Token(3 /* PARENTHESIS */, word);
+            tokens[itoken] = new Token(2 /* PARENTHESIS */, word);
           }
           parenthesisDepth--;
+        } else if (word === ",") {
+          const op = StaticSettings.CALL_OPERATOR_SYMBOL_MAP.get(word.charAt(0));
+          tokens[itoken] = new Token(1 /* OPERATOR */, word, op);
         } else if (word.length == 1 && StaticSettings.OPERATOR_SYMBOL_SET.has(word.charAt(0))) {
           let op = void 0;
           if (!lastToken || lastToken.word === "(" || lastToken.word === "," || lastToken.type === 1 /* OPERATOR */ && lastToken.operator?.type != 2 /* CALL */) {
@@ -306,7 +309,7 @@
               throw new ExevalatorError(ErrorMessages.UNKNOWN_UNARY_PREFIX_OPERATOR.replace("$0", word));
             }
             op = StaticSettings.UNARY_PREFIX_OPERATOR_SYMBOL_MAP.get(word.charAt(0));
-          } else if (lastToken.word === ")" || lastToken.type == 0 /* NUMBER_LITERAL */ || lastToken.type == 4 /* VARIABLE_IDENTIFIER */) {
+          } else if (lastToken.word === ")" || lastToken.type == 0 /* NUMBER_LITERAL */ || lastToken.type == 3 /* VARIABLE_IDENTIFIER */) {
             if (!StaticSettings.BINARY_OPERATOR_SYMBOL_MAP.has(word.charAt(0))) {
               throw new ExevalatorError(ErrorMessages.UNKNOWN_BINARY_OPERATOR.replace("$0", word));
             }
@@ -318,13 +321,11 @@
         } else if (word === StaticSettings.ESCAPED_NUMBER_LITERAL) {
           tokens[itoken] = new Token(0 /* NUMBER_LITERAL */, numberLiterals[iliteral]);
           iliteral++;
-        } else if (word === ",") {
-          tokens[itoken] = new Token(2 /* EXPRESSION_SEPARATOR */, word);
         } else {
           if (itoken < tokenCount - 1 && tokenWords[itoken + 1] === "(") {
-            tokens[itoken] = new Token(5 /* FUNCTION_IDENTIFIER */, word);
+            tokens[itoken] = new Token(4 /* FUNCTION_IDENTIFIER */, word);
           } else {
-            tokens[itoken] = new Token(4 /* VARIABLE_IDENTIFIER */, word);
+            tokens[itoken] = new Token(3 /* VARIABLE_IDENTIFIER */, word);
           }
         }
         lastToken = tokens[itoken];
@@ -387,7 +388,7 @@
       let contentCounter = 0;
       for (let itoken = 0; itoken < tokenCount; itoken++) {
         const token = tokens[itoken];
-        if (token.type === 3 /* PARENTHESIS */) {
+        if (token.type === 2 /* PARENTHESIS */) {
           if (token.word === "(") {
             contentCounter = 0;
           } else if (token.word === ")") {
@@ -412,7 +413,7 @@
       const tokenCount = tokens.length;
       const leafTypeSet = /* @__PURE__ */ new Set([
         0 /* NUMBER_LITERAL */,
-        4 /* VARIABLE_IDENTIFIER */
+        3 /* VARIABLE_IDENTIFIER */
       ]);
       for (let itoken = 0; itoken < tokenCount; itoken++) {
         const token = tokens[itoken];
@@ -422,7 +423,7 @@
         const prevIsCloseParenthesis = itoken != 0 && tokens[itoken - 1].word === ")";
         const nextIsPrefixOperator = itoken < tokenCount - 1 && tokens[itoken + 1].type === 1 /* OPERATOR */ && tokens[itoken + 1].operator?.type === 0 /* UNARY_PREFIX */;
         const nextIsFunctionCallBegin = nextIsOpenParenthesis && tokens[itoken + 1].type === 1 /* OPERATOR */ && tokens[itoken + 1].operator?.type === 2 /* CALL */;
-        const nextIsFunctionIdentifier = itoken < tokenCount - 1 && tokens[itoken + 1].type == 5 /* FUNCTION_IDENTIFIER */;
+        const nextIsFunctionIdentifier = itoken < tokenCount - 1 && tokens[itoken + 1].type == 4 /* FUNCTION_IDENTIFIER */;
         if (token.type === 1 /* OPERATOR */) {
           if (token.operator?.type === 0 /* UNARY_PREFIX */) {
             if (!(nextIsLeaf || nextIsOpenParenthesis || nextIsPrefixOperator || nextIsFunctionIdentifier)) {
@@ -460,18 +461,18 @@
     static parse(tokens) {
       const tokenCount = tokens.length;
       let stack = [];
-      const parenthesisStackLid = new AstNode(new Token(6 /* STACK_LID */, "(PARENTHESIS_STACK_LID)"));
-      const separatorStackLid = new AstNode(new Token(6 /* STACK_LID */, "(SEPARATOR_STACK_LID)"));
-      const callBeginStackLid = new AstNode(new Token(6 /* STACK_LID */, "(CALL_BEGIN_STACK_LID)"));
+      const parenthesisStackLid = new AstNode(new Token(5 /* STACK_LID */, "(PARENTHESIS_STACK_LID)"));
+      const separatorStackLid = new AstNode(new Token(5 /* STACK_LID */, "(SEPARATOR_STACK_LID)"));
+      const callBeginStackLid = new AstNode(new Token(5 /* STACK_LID */, "(CALL_BEGIN_STACK_LID)"));
       let nextOperatorPrecedences = _Parser.getNextOperatorPrecedences(tokens);
       let itoken = 0;
       do {
         const token = tokens[itoken];
-        if (token.type === 0 /* NUMBER_LITERAL */ || token.type === 4 /* VARIABLE_IDENTIFIER */ || token.type === 5 /* FUNCTION_IDENTIFIER */) {
+        if (token.type === 0 /* NUMBER_LITERAL */ || token.type === 3 /* VARIABLE_IDENTIFIER */ || token.type === 4 /* FUNCTION_IDENTIFIER */) {
           stack.push(new AstNode(token));
           itoken++;
           continue;
-        } else if (token.type === 3 /* PARENTHESIS */) {
+        } else if (token.type === 2 /* PARENTHESIS */) {
           if (token.word === "(") {
             stack.push(parenthesisStackLid);
           } else {
@@ -481,21 +482,17 @@
           }
           itoken++;
           continue;
-        } else if (token.type === 2 /* EXPRESSION_SEPARATOR */) {
-          stack.push(separatorStackLid);
-          itoken++;
-          continue;
         } else if (token.type === 1 /* OPERATOR */) {
           let operatorNode = new AstNode(token);
           const nextOpPrecedence = nextOperatorPrecedences[itoken];
           if (token.operator?.type === 0 /* UNARY_PREFIX */) {
-            if (_Parser.shouldAddRightTokenAsOperand(token.operator.precedence, nextOpPrecedence)) {
+            if (_Parser.shouldAddRightTokenAsOperand(token.operator.associativity, token.operator.precedence, nextOpPrecedence)) {
               operatorNode.childNodeList.push(new AstNode(tokens[itoken + 1]));
               itoken++;
             }
           } else if (token.operator?.type === 1 /* BINARY */) {
             operatorNode.childNodeList.push(stack.pop());
-            if (_Parser.shouldAddRightTokenAsOperand(token.operator.precedence, nextOpPrecedence)) {
+            if (_Parser.shouldAddRightTokenAsOperand(token.operator.associativity, token.operator.precedence, nextOpPrecedence)) {
               operatorNode.childNodeList.push(new AstNode(tokens[itoken + 1]));
               itoken++;
             }
@@ -506,12 +503,16 @@
               stack.push(callBeginStackLid);
               itoken++;
               continue;
-            } else {
+            } else if (token.word === ")") {
               const argNodes = _Parser.popPartialExprNodes(stack, callBeginStackLid);
               operatorNode = stack.pop();
               for (const argNode of argNodes) {
                 operatorNode.childNodeList.push(argNode);
               }
+            } else if (token.word === ",") {
+              stack.push(separatorStackLid);
+              itoken++;
+              continue;
             }
           }
           stack.push(operatorNode);
@@ -529,22 +530,26 @@
     /**
      * Judges whether the right-side token should be connected directly as an operand, to the target operator.
      *
+     * @param targetOperatorAssociativity - The associativity of the target operator.
      * @param targetOperatorPrecedence - The precedence of the target operator (smaller value gives higher precedence).
      * @param nextOperatorPrecedence - The precedence of the next operator (smaller value gives higher precedence).
      * @return Returns true if the right-side token (operand) should be connected to the target operator.
      */
-    static shouldAddRightTokenAsOperand(targetOperatorPrecedence, nextOperatorPrecedence) {
-      return targetOperatorPrecedence <= nextOperatorPrecedence;
+    static shouldAddRightTokenAsOperand(targetOperatorAssociativity, targetOperatorPrecedence, nextOperatorPrecedence) {
+      const targetOpPrecedenceIsStrong = targetOperatorPrecedence < nextOperatorPrecedence;
+      const targetOpPrecedenceIsEqual = targetOperatorPrecedence == nextOperatorPrecedence;
+      const targetOpAssociativityIsLeft = targetOperatorAssociativity == 0 /* LEFT */;
+      return targetOpPrecedenceIsStrong || targetOpPrecedenceIsEqual && targetOpAssociativityIsLeft;
     }
     /**
-     * Judges whether the node at the stack-top is an operator-type node,
-     * and it is prior (has stronger precedence) to the next operator.
+     * Judges whether the right-side token should be connected directly as an operand,
+     * to the operator at the top of the working stack.
      *
      * @param stack - The working stack used for the parsing.
      * @param nextOperatorPrecedence - The precedence of the next operator (smaller value gives higher precedence).
-     * @return Returns true if the stack top is operator-type node, and is prior to the next operator.
+     * @return Returns true if the right-side token (operand) should be connected to the operator at the top of the stack.
      */
-    static isStackTopPriorOperator(stack, nextOperatorPrecedence) {
+    static shouldAddRightOperandToStackedOperator(stack, nextOperatorPrecedence) {
       if (stack.length == 0) {
         return false;
       }
@@ -552,7 +557,12 @@
       if (stackTopToken.type != 1 /* OPERATOR */ || !stackTopToken.operator) {
         return false;
       }
-      return stackTopToken.operator.precedence <= nextOperatorPrecedence;
+      const operatorOnStackTop = stackTopToken.operator;
+      return _Parser.shouldAddRightTokenAsOperand(
+        operatorOnStackTop.associativity,
+        operatorOnStackTop.precedence,
+        nextOperatorPrecedence
+      );
     }
     /**
      * Connects all operators in the stack of which precedence is higher than the next operator's precedence.
@@ -561,23 +571,18 @@
      * @param nextOperatorPrecedence - The precedence of the next operator (smaller value gives higher precedence).
      */
     static connectOperatorsInStack(stack, nextOperatorPrecedence) {
-      let stackTopOperatorNode = stack.pop();
-      if (stackTopOperatorNode.token.type !== 1 /* OPERATOR */) {
-        throw new ExevalatorImplementationError(
-          "The top node of the stack must be an operator-type node when calling connectOperatorsInStack()."
-        );
-      }
-      while (_Parser.isStackTopPriorOperator(stack, nextOperatorPrecedence)) {
-        const operandOperatorNode = stackTopOperatorNode;
-        stackTopOperatorNode = stack.pop();
-        if (stackTopOperatorNode.token.type !== 1 /* OPERATOR */) {
+      let stackTopNode = stack.pop();
+      while (_Parser.shouldAddRightOperandToStackedOperator(stack, nextOperatorPrecedence)) {
+        const operandNode = stackTopNode;
+        stackTopNode = stack.pop();
+        if (stackTopNode.token.type !== 1 /* OPERATOR */) {
           throw new ExevalatorImplementationError(
             "The popped node must be an operator-type node because isRightOperandForStackTopOperator() returned true."
           );
         }
-        stackTopOperatorNode.childNodeList.push(operandOperatorNode);
+        stackTopNode.childNodeList.push(operandNode);
       }
-      stack.push(stackTopOperatorNode);
+      stack.push(stackTopNode);
     }
     /**
      * Pops root nodes of ASTs of partial expressions constructed on the stack.
@@ -593,7 +598,7 @@
       }
       let partialExprNodeList = [];
       while (stack.length != 0) {
-        if (stack[stack.length - 1].token.type === 6 /* STACK_LID */) {
+        if (stack[stack.length - 1].token.type === 5 /* STACK_LID */) {
           let stackLidNode = stack.pop();
           if (stackLidNode === endStackLidNode) {
             break;
@@ -630,7 +635,7 @@
         if (token.type === 1 /* OPERATOR */ && token.operator) {
           lastOperatorPrecedence = token.operator.precedence;
         }
-        if (token.type === 3 /* PARENTHESIS */) {
+        if (token.type === 2 /* PARENTHESIS */) {
           if (token.word === "(") {
             lastOperatorPrecedence = 0;
           } else {
@@ -654,33 +659,36 @@
     precedence;
     /** The type of operator tokens. */
     type;
+    /** The associativity of operator tokens. */
+    associativity;
     /**
      * Create an Operator instance storing specified information.
      *
      * @param type - The type of this operator.
      * @param symbol - The symbol of this operator.
      * @param precedence - The precedence of this operator.
+     * @param associativity - The associativity of this operator.
      */
-    constructor(type, symbol, precedence) {
+    constructor(type, symbol, precedence, associativity) {
       this.type = type;
       this.symbol = symbol;
       this.precedence = precedence;
+      this.associativity = associativity;
     }
     /**
      * Returns the String representation of this Operator instance.
      */
     toString() {
-      return `Operator [symbol=${this.symbol}, precedence=${this.precedence}, type=${this.type}]`;
+      return `Operator [symbol=${this.symbol}, type=${this.type}, precedence=${this.precedence}, associativity=${this.associativity}]`;
     }
   };
   var TokenType = /* @__PURE__ */ ((TokenType2) => {
     TokenType2[TokenType2["NUMBER_LITERAL"] = 0] = "NUMBER_LITERAL";
     TokenType2[TokenType2["OPERATOR"] = 1] = "OPERATOR";
-    TokenType2[TokenType2["EXPRESSION_SEPARATOR"] = 2] = "EXPRESSION_SEPARATOR";
-    TokenType2[TokenType2["PARENTHESIS"] = 3] = "PARENTHESIS";
-    TokenType2[TokenType2["VARIABLE_IDENTIFIER"] = 4] = "VARIABLE_IDENTIFIER";
-    TokenType2[TokenType2["FUNCTION_IDENTIFIER"] = 5] = "FUNCTION_IDENTIFIER";
-    TokenType2[TokenType2["STACK_LID"] = 6] = "STACK_LID";
+    TokenType2[TokenType2["PARENTHESIS"] = 2] = "PARENTHESIS";
+    TokenType2[TokenType2["VARIABLE_IDENTIFIER"] = 3] = "VARIABLE_IDENTIFIER";
+    TokenType2[TokenType2["FUNCTION_IDENTIFIER"] = 4] = "FUNCTION_IDENTIFIER";
+    TokenType2[TokenType2["STACK_LID"] = 5] = "STACK_LID";
     return TokenType2;
   })(TokenType || {});
   var Token = class {
@@ -846,13 +854,13 @@
       const token = ast.token;
       if (token.type === 0 /* NUMBER_LITERAL */) {
         return new NumberLiteralEvaluatorNode(token.word);
-      } else if (token.type === 4 /* VARIABLE_IDENTIFIER */) {
+      } else if (token.type === 3 /* VARIABLE_IDENTIFIER */) {
         if (!variableTable.has(token.word)) {
           throw new ExevalatorError(ErrorMessages.VARIABLE_NOT_FOUND.replace("$0", token.word));
         }
         const address = variableTable.get(token.word);
         return new VariableEvaluatorNode(address);
-      } else if (token.type === 5 /* FUNCTION_IDENTIFIER */) {
+      } else if (token.type === 4 /* FUNCTION_IDENTIFIER */) {
         return new NopEvaluatorNode();
       } else if (token.type === 1 /* OPERATOR */) {
         const op = token.operator;
@@ -1131,30 +1139,33 @@
       "*",
       "/",
       "(",
-      ")"
+      ")",
+      ","
     ]);
     /** The Map mapping each symbol of an unary-prefix operator to an instance of Operator class. */
     static UNARY_PREFIX_OPERATOR_SYMBOL_MAP = /* @__PURE__ */ new Map([
-      ["-", new Operator(0 /* UNARY_PREFIX */, "-", 200)]
+      ["-", new Operator(0 /* UNARY_PREFIX */, "-", 200, 1 /* RIGHT */)]
       // unary-minus operator
     ]);
     /** The Map mapping each symbol of an binary operator to an instance of Operator class. */
     static BINARY_OPERATOR_SYMBOL_MAP = /* @__PURE__ */ new Map([
-      ["+", new Operator(1 /* BINARY */, "+", 400)],
+      ["+", new Operator(1 /* BINARY */, "+", 400, 0 /* LEFT */)],
       // addition operator
-      ["-", new Operator(1 /* BINARY */, "-", 400)],
+      ["-", new Operator(1 /* BINARY */, "-", 400, 0 /* LEFT */)],
       // subtraction operator
-      ["*", new Operator(1 /* BINARY */, "*", 300)],
+      ["*", new Operator(1 /* BINARY */, "*", 300, 0 /* LEFT */)],
       // multiplication operator
-      ["/", new Operator(1 /* BINARY */, "/", 300)]
+      ["/", new Operator(1 /* BINARY */, "/", 300, 0 /* LEFT */)]
       // division operator
     ]);
     /** The Map mapping each symbol of an call operator to an instance of Operator class. */
     static CALL_OPERATOR_SYMBOL_MAP = /* @__PURE__ */ new Map([
-      ["(", new Operator(2 /* CALL */, "(", 100)],
+      ["(", new Operator(2 /* CALL */, "(", 100, 0 /* LEFT */)],
       // call-begin operator
-      [")", new Operator(2 /* CALL */, ")", Number.MAX_SAFE_INTEGER)]
+      [")", new Operator(2 /* CALL */, ")", Number.MAX_SAFE_INTEGER, 0 /* LEFT */)],
       // call-end operator, least prior
+      [",", new Operator(2 /* CALL */, ",", Number.MAX_SAFE_INTEGER, 0 /* LEFT */)]
+      // call-separator operator, least prior
     ]);
     /** The list of symbols to split an expression into tokens. */
     static TOKEN_SPLITTER_SYMBOL_LIST = [
@@ -1169,7 +1180,7 @@
   };
 
   // rinpn-online.ts
-  var RINPN_ONLINE_VERSION = "0.1.0";
+  var RINPN_ONLINE_VERSION = "0.1.2";
   var versionLabel = document.getElementById("version-label");
   var inputField = document.getElementById("input-field");
   var outputField = document.getElementById("output-field");
