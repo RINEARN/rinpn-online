@@ -7,6 +7,13 @@
 	<meta name="description" content="関数電卓 RINPn (りんぷん) の、ブラウザ上でも利用可能な簡易版です。">
 
 	<style>
+		@media (min-height: 0px) {
+			.visibility-switch { visibility: hidden; }
+		}
+		@media (min-height: 400px) {
+			.visibility-switch { visibility: visible; }
+		}
+
 		@media (min-width: 0px) {
 			body { background-color: #afddff; display: flex; flex-direction: column; }
 		}
@@ -16,15 +23,11 @@
 		@media (min-width: 380px) {
 			body { height: 50dvh; background-color: #afddff; display: flex; flex-direction: column; }
 		}
-		@media (min-width: 600px) {
+		@media (min-width: 600px) and (min-height: 0px) {
+			body { height: 85dvh; background-color: #afddff; display: flex; flex-direction: column; }
+		}
+		@media (min-width: 600px) and (min-height: 400px) {
 			body { height: 90dvh; background-color: #afddff; display: flex; flex-direction: column; }
-		}
-
-		@media (min-height: 0px) {
-			.visibility-switch { visibility: hidden; }
-		}
-		@media (min-height: 400px) {
-			.visibility-switch { visibility: visible; }
 		}
 
 		table { width: 100%; height: 100%; border-spacing: 0px; }
